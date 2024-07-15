@@ -3,9 +3,7 @@ import prisma from "@/app/lib/db";
 import Link from "next/link";
 import Image from "next/image";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { Textarea } from "@/components/ui/textarea";
-import { SaveButton, SubmitButton } from "@/app/components/submit-button";
-import { updateForumDescription } from "@/app/actions";
+import { Button } from "@/components/ui/button";
 import { ForumDescriptionForm } from "@/app/components/forum-description-form";
 import { PostCard } from "@/app/components/post-card";
 
@@ -82,6 +80,9 @@ export default async function ForumRoute({params}: {params: {forumId: string}}) 
                             {forum?.description}
                             </p>
                         )}
+                        <Button className="mt-2 w-full" asChild variant="secondary">
+                            <Link href={`/forum/${forum?.name}/create`}>Create Post</Link>
+                        </Button>
                         
                     </div>
                 </Card>

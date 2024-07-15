@@ -79,7 +79,7 @@ export default async function PostPage(
 
                 <div className="p-2 w-full">
                     <div className="flex items-center gap-x-2 p-2">
-                        <Link className="font-semibold text-xs" href={`/forum/${post.forumName}`}>
+                        <Link className="font-semibold text-medium" href={`/forum/${post.forumName}`}>
                             forum/{post.forumName}
                         </Link>
                         <p className="text-xs text-muted-foreground">

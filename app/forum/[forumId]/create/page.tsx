@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { SubmitButton } from "@/app/components/submit-button";
 import { useState } from "react";
 import { createPost } from "@/app/actions";
@@ -49,7 +48,7 @@ export default function CreatePostRoute({
       <div className="w-[65%] flex flex-col gap-y-5">
         <h1 className="font-semibold">
           <Link href={`/forum/${params.forumId}`} className="text-primary">
-            {params.forumId}
+            Creating a post in: {params.forumId}
           </Link>
         </h1>
         <Tabs defaultValue="post" className="w-full">
@@ -63,7 +62,6 @@ export default function CreatePostRoute({
               <form action={createPost}>
                 <input type="hidden" name="forumName" value={params.forumId} />
                 <CardHeader>
-                  <Label>Title</Label>
                   <Input
                     required
                     name="title"
