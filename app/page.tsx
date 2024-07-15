@@ -28,8 +28,18 @@ async function getData() {
   return data;
 }
 
+async function getForums() {
+  const data = await prisma.forum.findMany({
+    select: {
+      name: true,
+    }
+  });
+  return data;
+}
+
 export default async function Home() {
   const data = await getData();
+  const forums = await getForums();
   return (
     <div className="max-w-[1000px] mx-auto flex gap-x-10 mt-4">
       <div className="w-[65%] flex flex-col gap-y-5">
@@ -55,10 +65,14 @@ export default async function Home() {
           <Separator className="my-5" />
 
           <div className="flex flex-col gap-y-3">
-            <Button asChild variant="secondary">
-              <Link href="/forum/funny/create">Create Post</Link>
-              </Button>
             <Button asChild><Link href="/forum/create">Create Forum</Link></Button>
+            <Separator />
+            <p className="font-semibold text-muted-foreground ml-2">Forums</p>
+            {forums.map((forum) => (
+              <Button asChild variant="secondary">
+                <Link href={`/forum/${forum.name}`}>{forum.name}</Link>
+              </Button>
+            ))}
           </div>
         </Card>
 

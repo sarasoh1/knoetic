@@ -87,10 +87,10 @@ export default async function PostPage(
                         </p>
 
                         {((user?.id === post.author?.id) || (user?.id === post.forum?.createdByUserId)) ? (
-                            <>
+                            <div className="flex items-center gap-x-1">
                             <Link className="text-xs text-muted-foreground" href={`/post/${params.id}/edit`}>Edit</Link>
                             <DeletePostButton postId={post.id}/>
-                            </>
+                            </div>
                         ): (
                             <span></span>
                         )}
@@ -122,10 +122,10 @@ export default async function PostPage(
                                     <h3 className="text-sm font-medium">{comment.author?.userName}</h3>
                                     <span className="text-muted-foreground text-sm ml-1">{comment.createdAt.toDateString()}</span>
                                     {((user?.id === comment.author?.id) || (user?.id === post.forum?.createdByUserId)) ? (
-                                        <>
+                                        <div className="flex items-center gap-x-1">
                                             <Link href={`/post/${params.id}/comment/${comment.id}/edit`} className="text-xs text-muted-foreground ml-3">Edit</Link>
                                             <DeleteCommentButton commentId={comment.id} postId={post.id}/>
-                                        </>
+                                        </div>
                                         ) : (<span></span>)
                                     }
                                     
