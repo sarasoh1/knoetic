@@ -50,7 +50,6 @@ export default async function Home() {
           textContent={post.textContent ?? ""}
           forumName={post.forumName as string}
           userName={post.author?.userName as string}
-          key={post.id}
           numLikes={post.likes.length}
           numComments={post.comments.length}
           />
