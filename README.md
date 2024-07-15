@@ -1,8 +1,14 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Running locally
 
 First, run the project:
+
+``` bash
+npx prisma generate
+npx prisma studio
+```
+Run the generate command to generate the models used in the project. Open [http://localhost:5555](http://localhost:/5555) to view the database
 
 ```bash
 pnpm run dev
@@ -10,22 +16,29 @@ pnpm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-``` bash
-npx prisma studio
-```
-Open [http://localhost:5555](http://localhost:/5555) to view the database
+## Stack used
+For this project, I used a whole bunch of tools:
+- For a quick database / ORM provider, I used [**Prisma**](https://www.prisma.io/docs)
+- For component styling, I used [**ShadCN**](https://ui.shadcn.com/themes)
+- For OAuth / authentication needs, I used [**Kinde**](https://docs.kinde.com/)
 
-## Learn More
+These tools were able to help me get set up relatively quickly to start working on the requirements of the challenge.
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
+Main folders that matter:
+- *components*
+  - This houses all the components that perform majority of the functionalities that are detailed in the requirements.
+- *post*
+  - Belongs to the `Post` data model that will be elaborated down below
+- *forum*
+  - Belongs to the `Forum` data model that will be elaborated down below
+- *actions.ts*
+  - Performs the `CREATE, UPDATE, DELETE` operations on the data model
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Assumptions & Data Models
+It's my first time using an ORM tool, so I'm not too familiar with how to use it the most efficiently. My priority was to have something functional quick given that I didn't know a lot of things (like Typescript... and basically the whole entirety of frontend / full stack programming LOL)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Assumes that `Forum` model allows for only 1 admin
+2. Editing / updating posts will only allow you to edit the content body and not the title
+3. Each user is entitled to **1 like per post**. Clicking on the Like button again will unlike the post.
+4. 
