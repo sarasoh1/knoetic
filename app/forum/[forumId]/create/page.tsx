@@ -9,13 +9,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Text } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { TipTapEditor } from "@/app/components/tip-tap-editor";
 import { SubmitButton } from "@/app/components/submit-button";
 import { useState } from "react";
 import { createPost } from "@/app/actions";
-import { useToast } from "@/components/ui/use-toast";
-import { useFormState } from "react-dom";
-import { PostForm } from "@/app/components/post-form";
 import { Textarea } from "@/components/ui/textarea";
 
 const rules = [

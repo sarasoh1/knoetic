@@ -3,7 +3,6 @@ import { Card } from "@/components/ui/card";
 import { ArrowUp, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { likePost } from "../actions";
-import { RenderJSONToHtml } from "./render-json";
 
 interface iAppProps {
     title: string;
@@ -60,7 +59,7 @@ export function PostCard({
                 <div className="m-3">
                     <div className="flex items-center gap-x-1">
                         <MessageCircle className="h-4 w-4 text-muted-foreground" />
-                        <p className="text-muted-foreground font-medium text-xs">{numComments} comments</p>
+                        <Link href={`/post/${id}`} className="text-muted-foreground font-medium text-xs">{numComments} comments</Link>
                     </div>
                 </div>
             </div>

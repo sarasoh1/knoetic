@@ -213,3 +213,29 @@ export async function createComment(formData: FormData) {
     });
     return revalidatePath(`/post/${postID}`);
 }
+
+export async function updateComment(
+    prevState: any, 
+    formData: FormData
+) {
+    const {getUser} = getKindeServerSession();
+    const user = await getUser();
+
+    if (!user) {
+         return redirect("/api/auth/login");
+    }
+    const commentId = formData.get("commentId") as string;
+    const postId = formData.get("postId") as string;
+    const textComment = formData.get("comment") as string;
+
+    await prisma.comment.update({
+        where: {
+            id: commentId
+        },
+        data: {
+            text: textComment
+        }
+    });
+
+    return redirect(`/post/${postId}`);
+}
