@@ -18,7 +18,8 @@ async function getData() {
         }
       },
       forumName: true,
-      likes: true
+      likes: true,
+      comments: true,
     },
     orderBy:{
       createdAt: "desc"
@@ -36,11 +37,12 @@ export default async function Home() {
           <PostCard 
           title={post.title} 
           id={post.id} 
-          jsonContent={post.textContent ?? ""}
+          textContent={post.textContent ?? ""}
           forumName={post.forumName as string}
           userName={post.author?.userName as string}
           key={post.id}
           numLikes={post.likes.length}
+          numComments={post.comments.length}
           />
         ))}
       </div>

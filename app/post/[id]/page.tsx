@@ -8,6 +8,7 @@ import { ArrowUp, MessageCircle } from "lucide-react";
 import Link from 'next/link';
 import { CommentForm } from "@/app/components/comment-form";
 import { Separator } from "@/components/ui/separator";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 async function getPost(id : string) {
     const data = await prisma.post.findUnique({
@@ -28,6 +29,7 @@ async function getPost(id : string) {
             },
             author: {
                 select : {
+                    id: true,
                     userName: true
                 }
             },
@@ -56,6 +58,9 @@ export default async function PostPage(
     {params} : {params : {id: string}}
 ) {
     const post = await getPost(params.id);
+    const {getUser} = getKindeServerSession();
+    const user = await getUser();
+
     return (
         <div className="max-w-[1200px] mx-auto flex gap-x-10 mt-4 mb-10 justify-center">
             <div className="w-[100%] flex flex-col gap-y-5">
@@ -79,6 +84,13 @@ export default async function PostPage(
                         <p className="text-xs text-muted-foreground">
                             Posted by <span className="hover:text-primary">{post.author?.userName}</span>
                         </p>
+
+                        {user?.id === post.author?.id ? (
+                            <Link className="text-xs text-muted-foreground" href={`/post/${params.id}/edit`}>Edit</Link>
+                        ): (
+                            <span></span>
+                        )}
+                        
                     </div>
 
                     <div className="px-2">
@@ -88,7 +100,7 @@ export default async function PostPage(
                     </div>
 
                     <div className="px-2 mt-2">
-                        <RenderJSONToHtml data={post.textContent}/>
+                        <p>{post.textContent}</p>
                     </div>
 
                     <div className="flex gap-x-1 items-center mt-5">

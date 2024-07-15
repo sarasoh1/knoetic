@@ -29,7 +29,8 @@ async function getForum(name : string){
                         select: {
                             userName: true
                         }
-                    }
+                    },
+                    comments:true
                 }
             }
         }
@@ -53,8 +54,9 @@ export default async function ForumRoute({params}: {params: {forumId: string}}) 
                         key={post.id}
                         forumName={forum.name}
                         userName={post.author?.userName as string}
-                        jsonContent={post.textContent ?? ""}
+                        textContent={post.textContent ?? ""}
                         numLikes={post.likes.length}
+                        numComments={post.comments.length}
                     />
                 ))}
             </div>

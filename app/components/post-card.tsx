@@ -7,20 +7,22 @@ import { RenderJSONToHtml } from "./render-json";
 
 interface iAppProps {
     title: string;
-    jsonContent: any;
+    textContent: string;
     id: string;
     forumName: string;
     userName: string;
     numLikes: number;
+    numComments: number;
 }
 
 export function PostCard({
     title,
-    jsonContent,
+    textContent,
     id,
     forumName,
     userName,
-    numLikes
+    numLikes,
+    numComments
 }: iAppProps) {
     return (
         <Card className="flex relative overflow-hidden">
@@ -52,13 +54,13 @@ export function PostCard({
                 </div>
 
                 <div className="px-2 mt-2">
-                    <RenderJSONToHtml data={jsonContent}/>
+                    <p>{textContent}</p>
                 </div>
 
                 <div className="m-3">
                     <div className="flex items-center gap-x-1">
                         <MessageCircle className="h-4 w-4 text-muted-foreground" />
-                        <p className="text-muted-foreground font-medium text-xs">31 comments</p>
+                        <p className="text-muted-foreground font-medium text-xs">{numComments} comments</p>
                     </div>
                 </div>
             </div>

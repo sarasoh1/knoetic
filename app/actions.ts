@@ -4,7 +4,6 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import prisma from "@/app/lib/db";
 import { Prisma } from "@prisma/client";
-import { JSONContent } from "@tiptap/react";
 import { revalidatePath } from "next/cache";
 
 export async function updateUserName(prevState: any, formData: FormData) {
@@ -107,7 +106,6 @@ export async function updateForumDescription(prevState: any, formData: FormData)
 }
 
 export async function createPost(
-    { jsonContent }: { jsonContent: JSONContent | null},
     formData: FormData
 ) {
     const { getUser } = getKindeServerSession();
@@ -119,21 +117,42 @@ export async function createPost(
     
     const title = formData.get("title") as string;
     const forumName = formData.get("forumName") as string;
-    console.log(forumName);
+    const content = formData.get("textContent") as string;
     await prisma.post.create({
         data: {
             title: title,
             forumName: forumName,
             authorId: user.id,
-            textContent: jsonContent ?? Prisma.JsonNull,
+            textContent: content ?? "",
         },
     })
     return redirect("/")
     
 }
 
-export async function editPost(){
+export async function updatePost(
+    prevState: any, 
+    formData: FormData
+) {
+    const {getUser} = getKindeServerSession();
+    const user = await getUser();
 
+    if (!user) {
+         return redirect("/api/auth/login");
+    }
+    const postId = formData.get("postId") as string;
+    const postContent = formData.get("textContent") as string;
+
+    await prisma.post.update({
+        where: {
+            id: postId
+        },
+        data: {
+            textContent: postContent
+        }
+    });
+
+    return redirect(`/post/${postId}`);
 }
 
 export async function likePost(

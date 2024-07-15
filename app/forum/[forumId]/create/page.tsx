@@ -13,7 +13,10 @@ import { TipTapEditor } from "@/app/components/tip-tap-editor";
 import { SubmitButton } from "@/app/components/submit-button";
 import { useState } from "react";
 import { createPost } from "@/app/actions";
-import { JSONContent } from "@tiptap/react";
+import { useToast } from "@/components/ui/use-toast";
+import { useFormState } from "react-dom";
+import { PostForm } from "@/app/components/post-form";
+import { Textarea } from "@/components/ui/textarea";
 
 const rules = [
   {
@@ -45,8 +48,6 @@ export default function CreatePostRoute({
 }) { 
   
   const [title, setTitle] = useState<null | string>(null);
-  const [json, setJson] = useState<null | JSONContent>(null);
-  const createPostInForum = createPost.bind(null, { jsonContent: json });
   return (
     <div className="max-w-[1000px] mx-auto flex gap-x-10 mt-4">
       <div className="w-[65%] flex flex-col gap-y-5">
@@ -63,7 +64,7 @@ export default function CreatePostRoute({
           </TabsList>
           <TabsContent value="post">
             <Card>
-              <form action={createPostInForum}>
+              <form action={createPost}>
                 <input type="hidden" name="forumName" value={params.forumId} />
                 <CardHeader>
                   <Label>Title</Label>
@@ -75,7 +76,11 @@ export default function CreatePostRoute({
                     onChange={(e) => setTitle(e.target.value)}
                   />
 
-                  <TipTapEditor setJson={setJson} json={json} />
+                <Textarea 
+                    placeholder="Write a post :)"
+                    name="textContent"
+                    defaultValue=""
+                />
                 </CardHeader>
                 <CardFooter>
                   <SubmitButton buttonName="Create Post" />
