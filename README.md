@@ -39,6 +39,9 @@ Main folders that matter:
 It's my first time using an ORM tool, so I'm not too familiar with how to use it the most efficiently. My priority was to have something functional quick given that I didn't know a lot of things (like Typescript... and basically the whole entirety of frontend / full stack programming LOL)
 
 1. Assumes that `Forum` model allows for only 1 admin
-2. Editing / updating posts will only allow you to edit the content body and not the title
-3. Each user is entitled to **1 like per post**. Clicking on the Like button again will unlike the post.
-4. 
+2. Assumes that each post has to be within a forum
+3. Editing / updating posts will only allow you to edit the content body and not the title
+4. Each user is entitled to **1 like per post**. Clicking on the Like button again will unlike the post.
+5. Post only takes in `string` data type
+
+### On delete
