@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { likePost } from "@/app/actions";
-import { ArrowUp, MessageCircle } from "lucide-react";
+import { ArrowUp, MessageCircle, DeleteIcon } from "lucide-react";
 import Link from 'next/link';
 import { CommentForm } from "@/app/components/comment-form";
 import { Separator } from "@/components/ui/separator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { DeletePostButton, DeleteCommentButton } from "@/app/components/delete-button";
 
 async function getPost(id : string) {
     const data = await prisma.post.findUnique({
@@ -85,7 +86,10 @@ export default async function PostPage(
                         </p>
 
                         {user?.id === post.author?.id ? (
+                            <>
                             <Link className="text-xs text-muted-foreground" href={`/post/${params.id}/edit`}>Edit</Link>
+                            <DeletePostButton postId={post.id}/>
+                            </>
                         ): (
                             <span></span>
                         )}
@@ -107,7 +111,7 @@ export default async function PostPage(
                         <p className="text-xs text-muted-foreground">{post.comments.length} Comments</p>
                     </div>
 
-                    <CommentForm postId={params.id} comment={null} commentId={null}/>
+                    <CommentForm postId={params.id} commentId={null}/>
                     <Separator className = "my-3"/>
 
                     <div className="flex flex-col gap-y-4">
@@ -117,7 +121,10 @@ export default async function PostPage(
                                     <h3 className="text-sm font-medium">{comment.author?.userName}</h3>
                                     <span className="text-muted-foreground text-sm ml-1">{comment.createdAt.toDateString()}</span>
                                     {user?.id === comment.author?.id ? (
-                                        <Link href={`/post/${params.id}/comment/${comment.id}/edit`} className="text-xs text-muted-foreground ml-3">Edit</Link>
+                                        <>
+                                            <Link href={`/post/${params.id}/comment/${comment.id}/edit`} className="text-xs text-muted-foreground ml-3">Edit</Link>
+                                            <DeleteCommentButton commentId={comment.id} postId={post.id}/>
+                                        </>
                                         ) : (<span></span>)
                                     }
                                     

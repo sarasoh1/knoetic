@@ -239,3 +239,28 @@ export async function updateComment(
 
     return redirect(`/post/${postId}`);
 }
+
+export async function deleteComment(formData: FormData){
+    
+    const commentId = formData.get("commentId") as string;
+    const postId = formData.get("postId") as string;
+    await prisma.comment.delete({
+        where: {
+            id: commentId
+        }
+    });
+
+    return revalidatePath(`/post/${postId}`);
+}
+
+export async function deletePost(formData: FormData) {
+
+    const postId = formData.get("postId") as string;
+    await prisma.post.delete({
+        where: {
+            id: postId
+        }
+    });
+
+    return redirect("/");
+}
