@@ -38,7 +38,7 @@ export default function CreateForumPage() {
                 <Separator className="my-4" />
                 <Label className="text-lg">Forum Name</Label>
                 <p className="text-muted-foreground">
-                    Forum names can't be changed
+                    Forum names cannot be changed
                 </p>
 
                 <div className="relative mt-3">
