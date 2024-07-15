@@ -47,6 +47,7 @@ export default async function Home() {
           <PostCard 
           title={post.title} 
           id={post.id} 
+          key={post.id}
           textContent={post.textContent ?? ""}
           forumName={post.forumName as string}
           userName={post.author?.userName as string}
@@ -68,7 +69,7 @@ export default async function Home() {
             <Separator />
             <p className="font-semibold text-muted-foreground ml-2">Forums</p>
             {forums.map((forum) => (
-              <Button asChild variant="secondary">
+              <Button asChild key={forum.name} variant="secondary">
                 <Link href={`/forum/${forum.name}`}>{forum.name}</Link>
               </Button>
             ))}

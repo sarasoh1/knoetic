@@ -7,6 +7,7 @@ import { likePost } from "../actions";
 interface iAppProps {
     title: string;
     textContent: string;
+    key: string;
     id: string;
     forumName: string;
     userName: string;
@@ -17,6 +18,7 @@ interface iAppProps {
 export function PostCard({
     title,
     textContent,
+    key,
     id,
     forumName,
     userName,
@@ -24,7 +26,7 @@ export function PostCard({
     numComments
 }: iAppProps) {
     return (
-        <Card className="flex relative overflow-hidden">
+        <Card key={key} className="flex relative overflow-hidden">
             <div className="flex flex-col items-center gap-y-2 bg-muted p-2">
                 <form action={likePost}>
                     <input type="hidden" name="postId" value={id} />
