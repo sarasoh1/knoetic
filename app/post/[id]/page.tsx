@@ -24,7 +24,8 @@ async function getPost(id : string) {
             forum : {
                 select: {
                     createdAt: true,
-                    description: true
+                    description: true,
+                    createdByUserId: true
                 }
             },
             author: {
@@ -85,7 +86,7 @@ export default async function PostPage(
                             Posted by <span className="hover:text-primary">{post.author?.userName}</span>
                         </p>
 
-                        {user?.id === post.author?.id ? (
+                        {((user?.id === post.author?.id) || (user?.id === post.forum?.createdByUserId)) ? (
                             <>
                             <Link className="text-xs text-muted-foreground" href={`/post/${params.id}/edit`}>Edit</Link>
                             <DeletePostButton postId={post.id}/>
@@ -120,7 +121,7 @@ export default async function PostPage(
                                 <div className="flex items-center text-sm">
                                     <h3 className="text-sm font-medium">{comment.author?.userName}</h3>
                                     <span className="text-muted-foreground text-sm ml-1">{comment.createdAt.toDateString()}</span>
-                                    {user?.id === comment.author?.id ? (
+                                    {((user?.id === comment.author?.id) || (user?.id === post.forum?.createdByUserId)) ? (
                                         <>
                                             <Link href={`/post/${params.id}/comment/${comment.id}/edit`} className="text-xs text-muted-foreground ml-3">Edit</Link>
                                             <DeleteCommentButton commentId={comment.id} postId={post.id}/>
