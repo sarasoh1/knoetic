@@ -45,3 +45,8 @@ It's my first time using an ORM tool, so I'm not too familiar with how to use it
 5. Post only takes in `string` data type
 
 ### On delete
+Assumes that on delete changes are cascade down to related classes.
+- `Forum`: Deletes
+  - Deletes the corresponding posts in the forum
+- `Post`: Deletes
+  - Deletes the `Likes` and `Comments` table
