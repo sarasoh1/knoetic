@@ -1,7 +1,7 @@
 ## Running locally
 
 Oh my it runs! here!
-https://knoetic-5dvo950ul-saras-projects-0bfbf543.vercel.app/
+https://knoetic.vercel.app/
 
 First, run the project:
 
@@ -14,8 +14,7 @@ Run the generate command to generate the models used in the project. Open [http:
 ```bash
 pnpm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Update environment variables and open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Stack used
 For this project, I used a whole bunch of tools:
