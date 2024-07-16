@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Running locally
 
+Oh my it runs! here!
+https://knoetic-5dvo950ul-saras-projects-0bfbf543.vercel.app/
+
 First, run the project:
 
 ``` bash
