@@ -32,6 +32,6 @@ export async function GET() {
             }
         })
     }
-
-    return NextResponse.redirect("http://localhost:3000/")
+    const redirectUri = process.env.KINDE_SITE_URL || "http://localhost:3000/";
+    return NextResponse.redirect(redirectUri);
 }
