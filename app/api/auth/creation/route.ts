@@ -2,8 +2,10 @@ import prisma from "@/app/lib/db";
 import { NextResponse } from "next/server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { generateUsername } from "unique-username-generator";
+import { unstable_noStore as noStore } from "next/cache";
 
 export async function GET() {
+    noStore();
     // check user in database
     // if user exists, return user
     // else return new user and return user to homepage
