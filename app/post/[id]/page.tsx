@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { likePost } from "@/app/actions";
-import { ArrowUp, MessageCircle, DeleteIcon } from "lucide-react";
+import { ArrowUp, MessageCircle } from "lucide-react";
 import Link from 'next/link';
 import { CommentForm } from "@/app/components/comment-form";
 import { Separator } from "@/components/ui/separator";
