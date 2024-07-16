@@ -28,7 +28,7 @@ export default async function EditPost({params}: {params: {id: string}}) {
     const post = await getPost(params.id);
 
     return (
-        <div>
+        <div className="w-[1000px] rounded-lg border bg-card text-card-foreground shadow-sm p-2 flex">
             <PostForm id={params.id} title={post?.title} textContent={post?.textContent}/>
         </div>
     )

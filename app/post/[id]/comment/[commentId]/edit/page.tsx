@@ -19,6 +19,9 @@ async function getComment(commentId: string){
 export default async function EditComment({params}: {params: {commentId: string}}) {
     const comment = await getComment(params.commentId);
     return (
-        <CommentForm postId={comment?.postId as string} commentId={params.commentId} />
+        <div className="max-w-full container flex justify-center mx-2 px-8">
+            <CommentForm postId={comment?.postId as string} commentId={params.commentId} />
+        </div>
+        
     )    
 }
