@@ -1,5 +1,5 @@
 import prisma from "@/app/lib/db";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { likePost } from "@/app/actions";
@@ -62,18 +62,31 @@ export default async function PostPage(
     const {getUser} = getKindeServerSession();
     const user = await getUser();
 
+    const router = useRouter();
+    
+    const handleLike = (postId: string) => {
+        async () => {
+            if (!user) {
+                router.push("/api/auth/login");
+                return;
+            } else {
+                likePost(postId, user.id);
+            }
+        };
+    };
+
     return (
         <div className="max-w-[1200px] mx-auto flex gap-x-10 mt-4 mb-10 justify-center">
             <div className="w-[100%] flex flex-col gap-y-5">
                 <Card className="p-2 flex">
                     <div className="flex flex-col items-center gap-y-2 mt-2">
-                        <form className="w-[100%]" action={likePost}>
+                        {/* <form className="w-[100%]" action={likePost}> */}
                             <input type="hidden" name="postId" value={params.id} />
                             <input type="hidden" name="liked" value="true" />
-                            <Button variant="outline" size="sm" type="submit">
+                            <Button variant="outline" size="sm" onClick={() => handleLike(params.id)}>
                                 <ArrowUp className="h-5 w-5" />
                             </Button>
-                        </form>
+                        {/* </form> */}
                         {post.likes.length}
                     </div>
 

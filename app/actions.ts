@@ -156,22 +156,14 @@ export async function updatePost(
 }
 
 export async function likePost(
-    formData: FormData
+    postId: string,
+    userId: string,
 ) {
-    const { getUser } = getKindeServerSession();
-    const user = await getUser();
-
-    if (!user) {
-        revalidatePath("/", "layout");
-        return redirect("/api/auth/login");
-    }
-
-    const postId = formData.get("postId") as string;
     // checks if i've already liked the post
     const postLiked = await prisma.like.findFirst({
         where: {
             postId: postId,
-            userId: user.id
+            userId: userId
         }
     }); 
 
@@ -187,7 +179,7 @@ export async function likePost(
         await prisma.like.create({
             data: {
                 postId: postId,
-                userId: user.id
+                userId: userId
             }
         })
     }
