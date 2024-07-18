@@ -8,7 +8,7 @@ import { ArrowUp, MessageCircle } from "lucide-react";
 import Link from 'next/link';
 import { CommentForm } from "@/app/components/comment-form";
 import { Separator } from "@/components/ui/separator";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { DeletePostButton, DeleteCommentButton } from "@/app/components/delete-button";
 
 async function getPost(id : string) {
@@ -60,20 +60,18 @@ export default async function PostPage(
     {params} : {params : {id: string}}
 ) {
     const post = await getPost(params.id);
-    const {getUser} = getKindeServerSession();
-    const user = await getUser();
+    const { user } = useKindeBrowserClient();
 
     const router = useRouter();
     
-    const handleLike = (postId: string) => {
-        async () => {
+    const handleLike = (postId: string) => 
+        async (e: any) => {
+            console.log("like: ", postId);
             if (!user) {
                 router.push("/api/auth/login");
-                return;
             } else {
                 likePost(postId, user.id);
-            }
-        };
+            } 
     };
 
     return (
@@ -84,7 +82,7 @@ export default async function PostPage(
                         {/* <form className="w-[100%]" action={likePost}> */}
                             <input type="hidden" name="postId" value={params.id} />
                             <input type="hidden" name="liked" value="true" />
-                            <Button variant="outline" size="sm" onClick={() => handleLike(params.id)}>
+                            <Button variant="outline" size="sm" onClick={handleLike(params.id)}>
                                 <ArrowUp className="h-5 w-5" />
                             </Button>
                         {/* </form> */}
