@@ -162,7 +162,7 @@ export async function likePost(
     const user = await getUser();
 
     if (!user) {
-        redirect("/api/auth/login");
+        return redirect("/api/auth/login");
     }
 
     const postId = formData.get("postId") as string;
