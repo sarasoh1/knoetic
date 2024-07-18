@@ -162,6 +162,7 @@ export async function likePost(
     const user = await getUser();
 
     if (!user) {
+        revalidatePath("/api/auth/login");
         return redirect("/api/auth/login");
     }
 
