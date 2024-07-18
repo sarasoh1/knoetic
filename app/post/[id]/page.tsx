@@ -1,3 +1,4 @@
+"use client";
 import prisma from "@/app/lib/db";
 import { notFound, useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
