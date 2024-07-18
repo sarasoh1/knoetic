@@ -1,14 +1,12 @@
-"use client";
 import prisma from "@/app/lib/db";
-import { notFound, useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { likePost } from "@/app/actions";
-import { ArrowUp, MessageCircle } from "lucide-react";
+import { LikeButton } from "@/app/components/like-button";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { MessageCircle } from "lucide-react";
 import Link from 'next/link';
 import { CommentForm } from "@/app/components/comment-form";
 import { Separator } from "@/components/ui/separator";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { DeletePostButton, DeleteCommentButton } from "@/app/components/delete-button";
 
 async function getPost(id : string) {
@@ -60,19 +58,8 @@ export default async function PostPage(
     {params} : {params : {id: string}}
 ) {
     const post = await getPost(params.id);
-    const { user } = useKindeBrowserClient();
-
-    const router = useRouter();
-    
-    const handleLike = (postId: string) => 
-        async (e: any) => {
-            console.log("like: ", postId);
-            if (!user) {
-                router.push("/api/auth/login");
-            } else {
-                likePost(postId, user.id);
-            } 
-    };
+    const {getUser} = getKindeServerSession();
+    const user = await getUser();
 
     return (
         <div className="max-w-[1200px] mx-auto flex gap-x-10 mt-4 mb-10 justify-center">
@@ -82,9 +69,8 @@ export default async function PostPage(
                         {/* <form className="w-[100%]" action={likePost}> */}
                             <input type="hidden" name="postId" value={params.id} />
                             <input type="hidden" name="liked" value="true" />
-                            <Button variant="outline" size="sm" onClick={handleLike(params.id)}>
-                                <ArrowUp className="h-5 w-5" />
-                            </Button>
+                            <LikeButton id={params.id} />
+                            {/* <Button variant="outline" size="sm" onClick={handleLike(params.id)}> */}
                         {/* </form> */}
                         {post.likes.length}
                     </div>

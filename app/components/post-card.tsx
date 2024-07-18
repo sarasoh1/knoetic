@@ -1,11 +1,8 @@
-"use client";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowUp, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Link from "next/link";
-import { likePost } from "../actions";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
-import { redirect, useRouter } from "next/navigation";
+import { LikeButton } from "./like-button";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 interface iAppProps {
     title: string;
@@ -18,7 +15,7 @@ interface iAppProps {
     numComments: number;
 }
 
-export function PostCard({
+export async function PostCard({
     title,
     textContent,
     key,
@@ -28,18 +25,9 @@ export function PostCard({
     numLikes,
     numComments
 }: iAppProps) {
-    const router = useRouter();
-    const {user} = useKindeBrowserClient();
     
-    const handleLike = (postId: string) => 
-        async (e: any) => {
-            console.log("like: ", postId);
-            if (!user) {
-                router.push("/api/auth/login");
-            } else {
-                likePost(postId, user.id);
-            } 
-    };
+    const {getUser} = getKindeServerSession();
+    const user = await getUser();
 
     return (
         <Card key={key} className="flex relative overflow-hidden">
@@ -47,9 +35,7 @@ export function PostCard({
                 {/* <form action={likePost}> */}
                     <input type="hidden" name="postId" value={id} />
                     <input type="hidden" name="liked" value="true" />
-                    <Button variant="outline" size="sm" onClick={handleLike(id)}>
-                        <ArrowUp className="h-5 w-5" />
-                    </Button>
+                    <LikeButton id={id}/>
                 {/* </form> */}
                 {numLikes}
             </div>
